@@ -8,7 +8,6 @@ Projeto web completo com controle de acesso baseado em funções (RBAC) e listas
 - Node.js
 - Express
 - PostgreSQL
-- Sequelize ORM
 - JWT para autenticação
 - Bcrypt para hash de senhas
 
@@ -17,7 +16,6 @@ Projeto web completo com controle de acesso baseado em funções (RBAC) e listas
 - React 18
 - TypeScript
 - Tailwind CSS
-- Axios para requisições
 
 ## 📁 Estrutura do Projeto
 
@@ -157,7 +155,3 @@ O projeto está hospedado no **Vercel**:
 **Feito por João Pedro H Neves**
 
 Stack: Next.js • React • Node.js • PostgreSQL • TypeScript
-
-## 📄 Licença
-
-MIT
