@@ -13,7 +13,7 @@ const app = express();
 // Middlewares
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL || '*'
+    ? [process.env.FRONTEND_URL, 'https://sistema-estagio-fag.vercel.app'].filter(Boolean)
     : '*',
   credentials: true
 };
