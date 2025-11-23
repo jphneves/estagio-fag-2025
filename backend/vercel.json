@@ -5,7 +5,8 @@
       "src": "src/server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["src/**", "node_modules/pg/**", "node_modules/pg-hstore/**"]
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["src/**"]
       }
     }
   ],
@@ -17,5 +18,11 @@
   ],
   "env": {
     "NODE_ENV": "production"
+  },
+  "functions": {
+    "src/server.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
   }
 }
