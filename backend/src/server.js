@@ -66,25 +66,27 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Erro interno do servidor' });
 });
 
-// Inicializar servidor
-const PORT = process.env.PORT || 3001;
-
-async function startServer() {
+// Inicializar banco de dados
+async function initializeDatabase() {
   try {
-    // Testar conexão com banco
     await sequelize.authenticate();
     console.log('✓ Conexão com banco de dados estabelecida');
-
-    // Iniciar servidor
-    app.listen(PORT, () => {
-      console.log(`✓ Servidor rodando na porta ${PORT}`);
-      console.log(`✓ Ambiente: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`\n📍 API disponível em: http://localhost:${PORT}`);
-    });
   } catch (error) {
-    console.error('Erro ao iniciar servidor:', error);
-    process.exit(1);
+    console.error('Erro ao conectar ao banco:', error);
   }
 }
 
-startServer();
+initializeDatabase();
+
+// Para Vercel serverless
+module.exports = app;
+
+// Para desenvolvimento local
+if (require.main === module) {
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`✓ Servidor rodando na porta ${PORT}`);
+    console.log(`✓ Ambiente: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`\n📍 API disponível em: http://localhost:${PORT}`);
+  });
+}
