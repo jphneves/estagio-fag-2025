@@ -11,27 +11,12 @@ const permissionRoutes = require('./routes/permissions');
 const app = express();
 
 // Middlewares - CORS configurado para produção
-const allowedOrigins = [
-  'https://sistema-estagio-fag.vercel.app',
-  'http://localhost:3000',
-  process.env.FRONTEND_URL
-].filter(Boolean);
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Permite requisições sem origin (como Postman) ou de origens permitidas
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+app.use(cors({
+  origin: ['https://sistema-estagio-fag.vercel.app', 'http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-};
-
-app.use(cors(corsOptions));
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -66,19 +51,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Erro interno do servidor' });
 });
 
-// Inicializar banco de dados
-async function initializeDatabase() {
-  try {
-    await sequelize.authenticate();
-    console.log('✓ Conexão com banco de dados estabelecida');
-  } catch (error) {
-    console.error('Erro ao conectar ao banco:', error);
-  }
-}
-
-initializeDatabase();
-
-// Para Vercel serverless
+// Para Vercel serverless - exporta o app diretamente
 module.exports = app;
 
 // Para desenvolvimento local
