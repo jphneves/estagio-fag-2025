@@ -54,11 +54,15 @@ Projeto web completo com controle de acesso baseado em funções (RBAC) e listas
 - Permissões: CREATE, READ, UPDATE, DELETE
 - Associação de permissões por role e usuário
 
-## 🛠️ Instalação
+## 🌐 Demo Online
+
+- **Frontend**: https://sistema-estagio-fag.vercel.app
+- **Backend API**: https://estagio-fag-2025.vercel.app
+
+## 🛠️ Instalação Local
 
 ### Pré-requisitos
 - Node.js 18+
-- PostgreSQL 14+
 - npm ou yarn
 
 ### Backend
@@ -71,15 +75,17 @@ npm install
 Configure o arquivo `.env`:
 
 ```env
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/nome_db
+DATABASE_URL=postgresql://usuario:senha@host:5432/nome_db
 JWT_SECRET=sua_chave_secreta_aqui
 PORT=3001
+NODE_ENV=development
 ```
 
-Execute as migrations:
+Execute as migrations (se usar banco local):
 
 ```bash
 npm run migrate
+npm run seed
 ```
 
 Inicie o servidor:
@@ -93,6 +99,17 @@ npm run dev
 ```bash
 cd frontend
 npm install
+```
+
+Configure o arquivo `.env.local`:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+Inicie o frontend:
+
+```bash
 npm run dev
 ```
 
@@ -122,6 +139,24 @@ Após executar o seed:
 - **Admin**: admin@example.com / admin123
 - **Manager**: manager@example.com / manager123
 - **User**: user@example.com / user123
+
+## 🚀 Deploy
+
+O projeto está hospedado no **Vercel**:
+- Frontend e Backend deployados automaticamente via GitHub
+- Banco de dados PostgreSQL hospedado no **Neon.tech**
+- SSL/TLS configurado automaticamente
+
+### Estrutura de Deploy
+- `backend/api/index.js` - Função serverless Vercel
+- `backend/vercel.json` - Configuração de rotas
+- `frontend/vercel.json` - Configuração do Next.js
+
+## 👨‍💻 Desenvolvedor
+
+**Feito por João Pedro H Neves**
+
+Stack: Next.js • React • Node.js • PostgreSQL • TypeScript
 
 ## 📄 Licença
 
