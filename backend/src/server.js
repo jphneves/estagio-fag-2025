@@ -10,12 +10,25 @@ const permissionRoutes = require('./routes/permissions');
 
 const app = express();
 
-// Middlewares
+// Middlewares - CORS configurado para produção
+const allowedOrigins = [
+  'https://sistema-estagio-fag.vercel.app',
+  'http://localhost:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL, 'https://sistema-estagio-fag.vercel.app'].filter(Boolean)
-    : '*',
-  credentials: true
+  origin: function (origin, callback) {
+    // Permite requisições sem origin (como Postman) ou de origens permitidas
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
